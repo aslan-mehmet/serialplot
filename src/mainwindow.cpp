@@ -76,8 +76,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tabWidget->insertTab(4, &recordPanel, "Record");
     ui->tabWidget->setCurrentIndex(0);
     auto tbPortControl = portControl.toolBar();
-    addToolBar(tbPortControl);
-    addToolBar(recordPanel.toolbar());
+    //addToolBar(tbPortControl);
+    //addToolBar(recordPanel.toolbar());
+    addToolBar(singleShot.getToolBar());
 
     ui->plotToolBar->addAction(snapshotMan.takeSnapshotAction());
     ui->menuBar->insertMenu(ui->menuHelp->menuAction(), snapshotMan.menu());

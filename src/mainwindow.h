@@ -45,6 +45,7 @@
 #include "snapshotmanager.h"
 #include "plotmanager.h"
 #include "datarecorder.h"
+#include "singleshot.h"
 
 namespace Ui {
 class MainWindow;
@@ -79,6 +80,7 @@ private:
     PlotManager* plotMan;
     SnapshotManager snapshotMan;
     DataRecorder recorder;       // operated by `recordPanel`
+    SingleShot singleShot;
 
     QLabel spsLabel;
     CommandPanel commandPanel;
