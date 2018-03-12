@@ -63,7 +63,8 @@ MainWindow::MainWindow(QWidget *parent) :
     snapshotMan(this, &channelMan),
     commandPanel(&serialPort),
     dataFormatPanel(&serialPort, &channelMan, &recorder),
-    recordPanel(&recorder, &channelMan)
+    recordPanel(&recorder, &channelMan),
+    singleShot(&channelMan)
 {
     ui->setupUi(this);
 
@@ -157,6 +158,9 @@ MainWindow::MainWindow(QWidget *parent) :
     // init port signals
     QObject::connect(&(this->serialPort), SIGNAL(error(QSerialPort::SerialPortError)),
                      this, SLOT(onPortError(QSerialPort::SerialPortError)));
+
+    QObject::connect(&channelMan, &ChannelManager::dataAdded,
+                     &singleShot, &SingleShot::checkEdgeTransition);
 
     // init data format and reader
     QObject::connect(&channelMan, &ChannelManager::dataAdded,

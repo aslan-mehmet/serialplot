@@ -7,16 +7,23 @@
 #include <QComboBox>
 #include <QSpinBox>
 
+#include "channelmanager.h"
+
 class SingleShot : public QObject
 {
     Q_OBJECT
 public:
-    SingleShot();
+    SingleShot(ChannelManager *channelMan);
     ~SingleShot();
 
     QToolBar *getToolBar();
 
+public slots:
+    void checkEdgeTransition();
+
 private:
+    ChannelManager *_channelMan;
+
     bool state = false;
     enum EdgeState{Rising, Falling, RiseOrFall};
     int edgeState = 0;

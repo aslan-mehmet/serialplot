@@ -2,7 +2,8 @@
 #include "utils.h"
 #include <iostream>
 
-SingleShot::SingleShot() :
+SingleShot::SingleShot(ChannelManager *channelMan) :
+    _channelMan(channelMan),
     activateAction("Activate SingleShot", this),
     toolBar("SingleShot Toolbar")
 {
@@ -40,6 +41,11 @@ SingleShot::~SingleShot()
 QToolBar *SingleShot::getToolBar()
 {
     return &toolBar;
+}
+
+void SingleShot::checkEdgeTransition()
+{
+     std::cout << "checkEdgeTransition" << std::endl;
 }
 
 void SingleShot::onActivateToggleAction(bool state)
