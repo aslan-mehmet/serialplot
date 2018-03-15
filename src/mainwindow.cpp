@@ -159,8 +159,12 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(&(this->serialPort), SIGNAL(error(QSerialPort::SerialPortError)),
                      this, SLOT(onPortError(QSerialPort::SerialPortError)));
 
+    // init single shot signals
     QObject::connect(&channelMan, &ChannelManager::dataAdded,
                      &singleShot, &SingleShot::checkEdgeTransition);
+
+    QObject::connect(&singleShot, &SingleShot::singleShotPause,
+                     ui->actionPause, &QAction::trigger);
 
     // init data format and reader
     QObject::connect(&channelMan, &ChannelManager::dataAdded,

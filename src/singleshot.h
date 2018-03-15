@@ -21,11 +21,14 @@ public:
 public slots:
     void checkEdgeTransition();
 
+signals:
+    void singleShotPause(); // emitted when edge transition occurrs
+
 private:
     ChannelManager *_channelMan;
 
     bool state = false;
-    enum EdgeState{Rising, Falling, RiseOrFall};
+    enum EdgeState{Rising=0, Falling, RiseOrFall};
     int edgeState = 0;
     int threshold = 0;
 

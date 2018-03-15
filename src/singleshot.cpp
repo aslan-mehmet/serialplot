@@ -1,6 +1,5 @@
 #include "singleshot.h"
 #include "utils.h"
-#include <iostream>
 
 SingleShot::SingleShot(ChannelManager *channelMan) :
     _channelMan(channelMan),
@@ -45,23 +44,56 @@ QToolBar *SingleShot::getToolBar()
 
 void SingleShot::checkEdgeTransition()
 {
-     std::cout << "checkEdgeTransition" << std::endl;
+    if (!state) {
+        return;
+    }
+
+    FrameBuffer *holdBuffer = _channelMan->channelBuffer(0);
+    double midData = holdBuffer->sample(holdBuffer->size()/2),
+           beforeMidData = holdBuffer->sample(holdBuffer->size()/2-1);
+    bool triggered = false;
+
+    switch (edgeState)
+    {
+    case Rising:
+        if (midData > threshold && beforeMidData <= threshold) {
+            triggered = true;
+        }
+        break;
+    case Falling:
+        if (midData < threshold && beforeMidData >= threshold) {
+            triggered = true;
+        }
+        break;
+    case RiseOrFall:
+        if (midData > threshold && beforeMidData <= threshold) {
+            triggered = true;
+        }
+
+        if (midData < threshold && beforeMidData >= threshold) {
+            triggered = true;
+        }
+
+        break;
+    }
+
+    if (triggered) {
+        activateAction.setChecked(false);
+        emit singleShotPause();
+    }
 }
 
 void SingleShot::onActivateToggleAction(bool state)
 {
-    std::cout << "activate toggle action" << state << std::endl;
     this->state = state;
 }
 
 void SingleShot::onThresholdValueChange(int newThreshold)
 {
-    std::cout << "new threshold val:" << newThreshold << std::endl;
     threshold = newThreshold;
 }
 
 void SingleShot::onEdgeChange(int newEdge)
 {
-    std::cout << "new edge val:" << newEdge << std::endl;
     edgeState = newEdge;
 }

@@ -80,13 +80,13 @@ private:
     PlotManager* plotMan;
     SnapshotManager snapshotMan;
     DataRecorder recorder;       // operated by `recordPanel`
-    SingleShot singleShot;
 
     QLabel spsLabel;
     CommandPanel commandPanel;
     DataFormatPanel dataFormatPanel;
     RecordPanel recordPanel;
     PlotControlPanel plotControlPanel;
+    SingleShot singleShot;
 
     bool isDemoRunning();
     /// Stores settings for all modules
